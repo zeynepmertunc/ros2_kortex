@@ -42,15 +42,26 @@ ROS2 Kortex is the official ROS2 package to interact with Kortex and its related
 
 **Note:** There are several CI jobs checking against future upstream changes see [detailed build status](.github/workflows/README.md) for a full list of CI jobs and for more information.
 
+<<<<<<< HEAD
 **Note:** Gazebo classic support was removed from the `main` branch of this repository
+=======
+**Note:** Gazebo classic support was kept on the `humble` branch of this repository
+
+>>>>>>> humble
 
 ## Getting started
 
 1. Install ROS 2.
 
+<<<<<<< HEAD
   For this branch, ROS2 Jazzy has to be installed on Ubuntu 24.04.
 
    Latest LTS Release: [Install ROS2 Jazzy](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html)</br>
+=======
+   For this branch, ROS2 Humble has to be installed on Ubuntu 22.04.
+
+   Stable LTS Release: [Install ROS2 Humble](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debians.html)
+>>>>>>> humble
 
    After installing ROS2, source the setup.bash, which will set the `$ROS_DISTRO` environment variable.
 
@@ -77,13 +88,24 @@ To build this repository from source or contribute back to the repository read o
 3. Pull relevant packages:
    ```
    cd $COLCON_WS
-   git clone https://github.com/Kinovarobotics/ros2_kortex.git src/ros2_kortex
+   git clone -b humble --single-branch https://github.com/Kinovarobotics/ros2_kortex.git src/ros2_kortex
    vcs import src --skip-existing --input src/ros2_kortex/ros2_kortex.$ROS_DISTRO.repos
    vcs import src --skip-existing --input src/ros2_kortex/ros2_kortex-not-released.$ROS_DISTRO.repos
    ```
 
+<<<<<<< HEAD
    If you plan on simulating the robot with Gazebo, make sure to pull the additional simulation packages.
    If you're on ROS 2 Humble, run
+=======
+   If you plan on simulating the robot with ignition or gazebo, first install the simulator using the following commands:
+  ```
+  sudo apt-get update && sudo apt-get install wget
+  sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list'
+  wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -
+  sudo apt-get update && sudo apt-get install ignition-fortress
+  ```
+  Then make sure to pull the additional simulation packages. If you're on ROS2 Humble, run:
+>>>>>>> humble
    ```
    vcs import src --skip-existing --input src/ros2_kortex/simulation.jazzy.repos
    ```
@@ -177,7 +199,7 @@ Alternatively, for a physical robot:
 
 ```bash
 ros2 launch kortex_bringup gen3.launch.py \
-  robot_ip:=192.168.1.10 \
+  robot_ip:=192.168.1.10
 ```
 You can specify the following arguments if you wish to change your arm configuration:
 
@@ -206,24 +228,6 @@ You can specify the following arguments if you wish to change your arm configura
 * `controllers_file` : Ros 2 control configuration file to use. Default value is `ros2_controllers.yaml`
 
 * `launch_rviz` : Start an Rviz window to visualize the robot. Default value is `true`.
-
-#### Robotiq gripper
-
-The Robotiq 2f 85 (or 2f 140) Gripper will be available on the Action topic:
-
-```bash
-/robotiq_gripper_controller/gripper_cmd
-```
-
-You can test the gripper by calling the Action server with the following command and setting the desired `position` of the gripper (`0.0=open`, `0.8=close`)
-
-```bash
-ros2 action send_goal /robotiq_gripper_controller/gripper_cmd control_msgs/action/GripperCommand "{command:{position: 0.0, max_effort: 100.0}}"
-```
-
-#### Vision Module
-
-In order to access the Kinova Vision module's depth and color streams for the camera-equipped Gen3 arm models, please refer to the following github repository for detailed instructions: [ros2_kortex_vision](https://github.com/Kinovarobotics/ros2_kortex_vision)
 
 ### Gen 3 Lite Robot
 
@@ -293,19 +297,17 @@ ros2 launch kortex_bringup kortex_sim_control.launch.py \
 * `description_file` : URDF/XACRO description file with the robot. Default value is `kinova.urdf.xacro`.
 * `prefix` : Prefix of the joint names, useful for multi-robot setup. If changed, then also joint names in the controllers' configuration have to be updated. Default value is `""` (none).
 * `use_sim_time` : Use simulated clock. Default value is `true`.
+<<<<<<< HEAD
 * `gripper` : Gripper to use. Possible values for the Gen3 are: `robotiq_2f_85`, `robotiq_2f_140`, `""` and `gen3_lite_2f`. Default is `robotiq_2f_85`. An empty string will not initialise any gripper.
+=======
+* `gripper` : Gripper to use. Possible values for the Gen3 are: `robotiq_2f_85`, `robotiq_2f_140`, `""` and `gen3_lite_2f` and the default value is `""` which will not initialise any gripper.
+>>>>>>> humble
 
 #### MoveIt 2
 
-To generate motion plans and execute them with a simulated 7 DoF Kinova Gen3 arm with mock hardware:
+To generate motion plans and execute them with virtual arm hardware:
 
-```bash
-ros2 launch kinova_gen3_7dof_robotiq_2f_85_moveit_config robot.launch.py \
-  robot_ip:=yyy.yyy.yyy.yyy \
-  use_fake_hardware:=true
-```
-
-and to bring up the Kinova Gen3 6 DoF with MoveIt:
+1. For a 6 DoF Kinova Gen3 arm, run the following:
 
 ```bash
 ros2 launch kinova_gen3_6dof_robotiq_2f_85_moveit_config robot.launch.py \
@@ -313,33 +315,62 @@ ros2 launch kinova_gen3_6dof_robotiq_2f_85_moveit_config robot.launch.py \
   use_fake_hardware:=true
 ```
 
+<<<<<<< HEAD
 To generate motion plans and execute them with a Gazebo simulated 7 DoF Kinova Gen3 arm (previously launched with the command at the [simulation](#simulation) section):
+=======
+2. For a 7 DoF Kinova Gen3 arm, run the following:
+>>>>>>> humble
 
 ```bash
-ros2 launch kinova_gen3_7dof_robotiq_2f_85_moveit_config sim.launch.py \
-  use_sim_time:=true
+ros2 launch kinova_gen3_7dof_robotiq_2f_85_moveit_config robot.launch.py \
+  robot_ip:=yyy.yyy.yyy.yyy \
+  use_fake_hardware:=true
 ```
 
-To work with a physical robot and generate/execute paths with MoveIt run the following:
+To generate motion plans and execute them with real-life hardware:
 
-For Gen3:
+1. For a 6 DoF Kinova Gen3 arm with default IP address, run the following:
+
+```bash
+ros2 launch kinova_gen3_6dof_robotiq_2f_85_moveit_config robot.launch.py \
+  robot_ip:=192.168.1.10
+```
+
+2. For a 7 DoF Kinova Gen3 arm with default IP address, run the following:
 
 ```bash
 ros2 launch kinova_gen3_7dof_robotiq_2f_85_moveit_config robot.launch.py \
   robot_ip:=192.168.1.10
 ```
 
-For Gen3-Lite:
+3. For a Gen3-Lite arm with default IP address and connected through USB, run the following:
 
 ```bash
 ros2 launch kinova_gen3_lite_moveit_config robot.launch.py \
-  robot_ip:=192.168.1.10
+  robot_ip:=192.168.2.10
 ```
 
+To generate motion plans and execute them in simulation, make sure to first start the simulated robot with the command at the [simulation](#simulation) section, then:
 
+1. For a 6 DoF Kinova Gen3 arm, run the following:
+```bash
+ros2 launch kinova_gen3_6dof_robotiq_2f_85_moveit_config sim.launch.py \
+  use_sim_time:=true
+```
+2. For a 7 DoF Kinova Gen3 arm, run the following:
+```bash
+ros2 launch kinova_gen3_7dof_robotiq_2f_85_moveit_config sim.launch.py \
+  use_sim_time:=true
+```
+
+3. For a Gen3-Lite arm, run the following:
+```bash
+ros2 launch kinova_gen3_lite_moveit_config sim.launch.py \
+  use_sim_time:=true
+```
 
 ## Commanding the arm (physically and in simulation)
-You can command the arm by publishing Joint Trajectory messages directly to the joint trajectory controller:
+You can command the arm by publishing Joint Trajectory messages directly to the joint trajectory controller with joint positions are in **radians**:
 
 ```bash
 ros2 topic pub /joint_trajectory_controller/joint_trajectory trajectory_msgs/JointTrajectory "{
@@ -392,6 +423,25 @@ ros2 service call /controller_manager/switch_controller controller_manager_msgs/
   activate_asap: true,
 }"
 ```
+
+#### Robotiq gripper
+
+The Robotiq 2f 85 (or 2f 140) Gripper will be available on the Action topic:
+
+```bash
+/robotiq_gripper_controller/gripper_cmd
+```
+
+You can test the gripper by calling the Action server with the following command and setting the desired `position` of the gripper (`0.1=open`, `0.7=close`)
+
+```bash
+ros2 action send_goal /robotiq_gripper_controller/gripper_cmd control_msgs/action/GripperCommand "{command:{position: 0.0, max_effort: 100.0}}"
+```
+
+#### Vision Module
+
+In order to access the Kinova Vision module's depth and color streams for the camera-equipped Gen3 arm models, please refer to the following github repository for detailed instructions: [ros2_kortex_vision](https://github.com/Kinovarobotics/ros2_kortex_vision)
+
 
 ## Contents
 

@@ -169,7 +169,11 @@ def launch_setup(context, *args, **kwargs):
         condition=UnlessCondition(is_gen3_lite),
     )
 
+<<<<<<< HEAD
     robot_hand_lite_controller_spawner = Node(
+=======
+    lite_robot_hand_controller_spawner = Node(
+>>>>>>> humble
         package="controller_manager",
         executable="spawner",
         arguments=[robot_lite_hand_controller, "-c", "/controller_manager"],
@@ -248,10 +252,19 @@ def launch_setup(context, *args, **kwargs):
         robot_traj_controller_spawner,
         robot_pos_controller_spawner,
         robot_hand_controller_spawner,
+<<<<<<< HEAD
         robot_hand_lite_controller_spawner,
         gz_robotiq_env_var_resource_path,
         gz_launch_description,
         gz_spawn_entity,
+=======
+        lite_robot_hand_controller_spawner,
+        gzserver,
+        gzclient,
+        gazebo_spawn_robot,
+        ignition_launch_description,
+        ignition_spawn_entity,
+>>>>>>> humble
         gazebo_bridge,
     ]
 

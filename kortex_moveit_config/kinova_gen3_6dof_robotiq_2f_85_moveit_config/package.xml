@@ -6,8 +6,12 @@
   <description>
      An automatically generated package with all the configuration and launch files for using the gen3 with the MoveIt Motion Planning Framework
   </description>
+<<<<<<< HEAD
 <maintainer email="aalmrad@kinova.ca">Abed Al Rahman Al Mrad</maintainer>
 
+=======
+  <maintainer email="aalmrad@kinova.ca">Abed Al Rahman Al Mrad</maintainer>
+>>>>>>> humble
   <license>BSD-3-Clause</license>
 
   <url type="website">http://moveit.ros.org/</url>
